@@ -227,6 +227,7 @@ This library is licensed under the Apache 2.0 License.
   gst-inspect-1.0 kvssink
   
   #Stream to kinesis:
-  gst-launch-1.0 -v  filesrc location="/home/ubuntu/example-5min.mp4" ! qtdemux name=demux ! queue ! h264parse !  video/x-h264,stream-format=avc,alignment=au ! kvssink name=sink stream-name="huytest02" access-key="xxxxxxxxxx" secret-key="xxxxxxxxxxxxxxx" aws-region="ap-northeast-1" streaming-type=offline demux. ! queue ! aacparse ! sink.
+  gst-launch-1.0 -v  filesrc location="/home/ubuntu/example-5min.mp4" ! qtdemux name=demux ! queue ! h264parse !  video/x-h264,stream-format=avc,alignment=au ! kvssink name=sink stream-name="huytest02" access-key="xxxxxxxxxx" secret-key="xxxxxxxxxxxxxxx" aws-region="ap-northeast-1" streaming-type=offline demux. ! queue ! aacparse ! sink. 
+
 ================
 
