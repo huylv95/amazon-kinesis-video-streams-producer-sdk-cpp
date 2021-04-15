@@ -202,3 +202,31 @@ We deploy 3 digit version strings in a form of 'Major.Minor.Revision' scheme.
 ## License
 
 This library is licensed under the Apache 2.0 License.
+
+##My note 20210415:
+======================  
+  OS: Ubuntu 18.04
+  
+  #Install library
+  sudo apt update && sudo apt install build-essential -y && sudo apt install cmake -y && sudo apt-get install libssl-dev libcurl4-openssl-dev liblog4cplus-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-base-apps gstreamer1.0-plugins-bad gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-tools -y && sudo apt-get install -y openjdk-8-jdk && sudo apt-get install -y default-jdk && export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+  
+  #Clone source
+  git clone https://github.com/awslabs/amazon-kinesis-video-streams-producer-sdk-cpp.git
+  
+  #compile code
+  mkdir -p amazon-kinesis-video-streams-producer-sdk-cpp/build
+  cd amazon-kinesis-video-streams-producer-sdk-cpp/build
+  cmake .. -DBUILD_GSTREAMER_PLUGIN=ON -DBUILD_JNI=TRUE
+  make 
+
+  #variable
+  export GST_PLUGIN_PATH=/home/ubuntu/amazon-kinesis-video-streams-producer-sdk-cpp/build 
+  export LD_LIBRARY_PATH=/home/ubuntu/amazon-kinesis-video-streams-producer-sdk-cpp/open-source/local/lib
+
+  #Test:
+  gst-inspect-1.0 kvssink
+  
+  #Stream to kinesis:
+  gst-launch-1.0 -v  filesrc location="/home/ubuntu/example-5min.mp4" ! qtdemux name=demux ! queue ! h264parse !  video/x-h264,stream-format=avc,alignment=au ! kvssink name=sink stream-name="huytest02" access-key="xxxxxxxxxx" secret-key="xxxxxxxxxxxxxxx" aws-region="ap-northeast-1" streaming-type=offline demux. ! queue ! aacparse ! sink.
+================
+
